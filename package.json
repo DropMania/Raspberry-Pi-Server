@@ -1,0 +1,27 @@
+{
+    "name": "server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "cheerio": "^1.0.0-rc.9",
+        "dotenv": "^9.0.2",
+        "execa": "^5.1.1",
+        "express": "^4.17.1",
+        "johnny-five": "^2.0.0",
+        "magic-hue-controller": "^1.0.1",
+        "moment": "^2.29.1",
+        "node-fetch": "^2.6.1",
+        "spotify-web-api-node": "^5.0.2"
+    },
+    "devDependencies": {
+        "electron": "^13.1.1",
+        "electron-rebuild": "^2.3.5"
+    }
+}

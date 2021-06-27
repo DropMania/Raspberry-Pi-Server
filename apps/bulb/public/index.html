@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <title>Bulb Control</title>
+    <style>
+      body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .colorElement{
+        border-radius: 30px;
+        box-shadow: 5px 5px 5px #111;
+        overflow: auto;
+        display: flex;
+        align-items: flex-end;
+      }
+      .colorElement:hover{
+        filter: brightness(0.9);
+        cursor: pointer;
+      }
+      .colorElement:active{
+        filter: brightness(0.8);
+      }
+    </style>
+  </head>
+  <body style="-webkit-app-region: drag">
+   
+
+    <!-- You can also require other files to run in this process -->
+    
+  </body>
+  <script src="renderer.js"></script>
+</html>
