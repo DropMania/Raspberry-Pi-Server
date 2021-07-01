@@ -9,7 +9,7 @@ const {getAllPlaylistTracks} = require('./spotifyUtils')
  */
 function currentlyCool(Spotify){
     let playlist = '74xHDxBtQvnCJStRWZC3Sy'
-    let addTime = 1200000
+    let addTime = 600000
     let deleteTime = 172800000
     Job('PT5S',async ()=>{
         let playbackState = (await Spotify.getMyCurrentPlaybackState()).body

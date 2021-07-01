@@ -17,6 +17,7 @@
         "johnny-five": "^2.0.0",
         "magic-hue-controller": "^1.0.1",
         "moment": "^2.29.1",
+        "moment-duration-format": "^2.3.2",
         "node-fetch": "^2.6.1",
         "spotify-web-api-node": "^5.0.2"
     },
