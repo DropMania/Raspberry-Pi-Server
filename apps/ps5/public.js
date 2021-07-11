@@ -13,7 +13,7 @@ document.addEventListener('click', () => {
 })
 
 function get() {
-    fetch('http://pi/ps5/get')
+    fetch(serverPath + 'ps5/get')
         .then((r) => r.json())
         .then((response) => {
             let output = ''

@@ -35,8 +35,10 @@ function currentlyCool(Spotify){
             }
             let deltaTime = Number(new Date()) - tracks[trackId].lastListening
             if(deltaTime > deleteTime){
-                await Spotify.removeTracksFromPlaylist(playlist,[{uri: trackUri}])
-                log('spotify-currently-cool',{action: 'deleted', track: trackUri})
+                if(allTracks.includes(trackUri)){
+                    await Spotify.removeTracksFromPlaylist(playlist,[{uri: trackUri}])
+                    log('spotify-currently-cool',{action: 'deleted', track: trackUri})
+                }
                 delete tracks[trackId]
             }
         }

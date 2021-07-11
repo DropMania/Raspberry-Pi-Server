@@ -1,14 +1,16 @@
 const express = require('express')
 const app = express()
 require('dotenv').config()
+const cors = require('cors')
 const fs = require('fs')
 const log = require('./logger')
 
 let apps = fs.readdirSync(__dirname + '/apps')
+apps = apps.filter((a) => !['globals.js'].includes(a))
 let jobs = fs.readdirSync(__dirname + '/jobs')
 let logs = fs.readdirSync(__dirname + '/logs')
 log('start', {})
-
+app.use(cors())
 app.get('/', (req, res) => {
     res.send(
         ['logs', ...apps]
@@ -24,7 +26,9 @@ app.get('/', (req, res) => {
     )
 })
 apps.forEach((module) => {
-    app.use(`/${module}`, require(`./apps/${module}`).app)
+    if (module != 'globals.js') {
+        app.use(`/${module}`, require(`./apps/${module}`).app)
+    }
 })
 jobs.forEach((job) => {
     require(`./jobs/${job}/index`).init()
@@ -50,6 +54,9 @@ app.get('/logs/:log', (req, res) => {
     let json = fs.readFileSync(`${__dirname}/logs/${logfile}.json`)
 
     res.send(json.toString())
+})
+app.get('/globals.js', (req, res) => {
+    res.send(fs.readFileSync(__dirname + '/apps/globals.js'))
 })
 
 app.listen(process.env.PORT || 80)

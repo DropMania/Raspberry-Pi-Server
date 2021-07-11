@@ -9,7 +9,7 @@ function renderData(data) {
 }
 
 async function getData() {
-    let res = await fetch('http://pi/temp/get')
+    let res = await fetch(serverPath + 'temp/get')
     let data = await res.json()
     return data
 }

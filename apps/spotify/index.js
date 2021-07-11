@@ -3,10 +3,74 @@ const app = express()
 const fs = require('fs')
 const Spotify = require('../../globals').Spotify
 const moment = require('moment')
+const bodyParser = require('body-parser')
 const durationPlugin = require('moment-duration-format')
 durationPlugin(moment)
 
 app.use(express.static(__dirname + '/public'))
+app.use(bodyParser.json())
+
+app.get('/getall', async (req, res) => {
+    let playbackState = await Spotify.getMyCurrentPlaybackState()
+    let playlists = await Spotify.getUserPlaylists()
+    let recommends = await Spotify.getMyTopTracks()
+
+    res.send({
+        playbackState: playbackState.body,
+        playlists: playlists.body,
+        recommends: recommends.body
+    })
+})
+app.post('/getall', async (req, res) => {
+    let playbackState = await Spotify.getMyCurrentPlaybackState()
+    res.send({ playbackState: playbackState.body })
+})
+app.post('/toggle', async (req, res) => {
+    let {device} = req.body
+    let playbackState = await Spotify.getMyCurrentPlaybackState()
+    let msg = 'done'
+
+    if (playbackState.body.is_playing) {
+        await Spotify.pause().catch((e) => {
+            msg = 'no device'
+        })
+    } else {
+        await Spotify.play({device_id:device}).catch((e) => {
+            msg = 'no device'
+        })
+    }
+    res.send({ msg })
+})
+app.post('/next', async (req, res) => {
+    await Spotify.skipToNext()
+    let msg = 'done'
+    res.send({ msg })
+})
+app.post('/prev', async (req, res) => {
+    await Spotify.skipToPrevious()
+    let msg = 'done'
+    res.send({ msg })
+})
+app.post('/addToPlaylist', async (req, res) => {
+    let { pId, tURI } = req.body
+    await Spotify.addTracksToPlaylist(pId, [tURI])
+    let msg = 'done'
+    res.send({ msg })
+})
+app.post('/playSong', async (req, res) => {
+    let { uri, device } = req.body
+    /* await Spotify.addToQueue(uri,{device_id:device})
+    await Spotify.skipToNext({device_id: device}) */
+    await Spotify.play({
+        uris: [uri], device_id:device
+    })
+    let msg = 'done'
+    res.send({ msg })
+})
+app.get('/access_token',async (req,res)=>{
+    let at = await Spotify.getAccessToken()
+    res.send({at})
+})
 app.get('/currentlyCool', async (req, res) => {
     let ccContent = JSON.parse(
         fs.readFileSync(__dirname + '/../../jobs/spotify/tracks.json')

@@ -72,10 +72,10 @@ for (let color in COLOR_MAP) {
 
 function colorChange(color, brightness) {
     let params = new URLSearchParams({ color, brightness })
-    fetch(`http://pi/bulb/changeColor?` + params)
+    fetch(`${serverPath}bulb/changeColor?` + params)
 }
 
 function setWarm(brightness) {
     let params = new URLSearchParams({ brightness })
-    fetch(`http://pi/bulb/changeWarm?` + params)
+    fetch(`${serverPath}bulb/changeWarm?` + params)
 }
